@@ -33,9 +33,14 @@
 				 * @param {Object} opts A hash object of the configuration passed to the Resumable.js instance.
 				 */
 				function AngularResumable(opts) {
-					this.opts = angular.extend({}, defaults, globalOptions, opts);
-					//this.r = new Resumable(this.opts);
+					// combine default options with global options and options
+					opts = angular.extend({}, defaults, globalOptions, opts);
+
+					// invoke super constructor
+					Resumable.call(this, opts);
 				}
+				AngularResumable.prototype = new Resumable();
+				AngularResumable.prototype.constructor = AngularResumable;
 
 				// returnt the public api of the resumableJsFactory.
 				return {
