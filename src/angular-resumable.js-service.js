@@ -7,28 +7,46 @@
 	angular.module('resumable.js-services', [])
 		/**
 		 * @ngdoc service
-		 * @name resumableJsService
+		 * @name resumableJsFactory
 		 *
 		 * @description
 		 * Wraps the resumable.js API and adds scope management.
 		 */
-		.provider('resumableJs', [function() {
+		.provider('resumableJsFactory', [function() {
 			// define the default properties send to resumable.js
 			var defaults = {},
 				globalOptions = {};
 
 			// The `options({})` allows global configuration of all resumable.js instances.
 			//
-			//      var app = angular.module('App', ['resumable.js-services'], function(resumableJsProvider){
-			//        resumableJsProvider.options({target: '/'});
+			//      var app = angular.module('App', ['resumable.js-services'], function(resumableJsFactoryProvider){
+			//        resumableJsFactoryProvider.options({target: '/'});
 			//      });
-			this.options = function(value){
+			this['options'] = function(value){
 				globalOptions = value;
 			};
 
-			// return the actual resumableJs service that is injected in controllers
-			this.$get = [function() {
+			// return the actual resumableJsFactory that is injected in controllers
+			this['$get'] = [function() {
+				/**
+				 * Constructor of the AngularResumable class.
+				 * @param {Object} opts A hash object of the configuration passed to the Resumable.js instance.
+				 */
+				function AngularResumable(opts) {
+					this.opts = angular.extend({}, defaults, globalOptions, opts);
+					//this.r = new Resumable(this.opts);
+				}
+
+				// returnt the public api of the resumableJsFactory.
 				return {
+					/**
+					 * Creates an instance of the {AngularResumable} class.
+					 * @param  {Object}           opts A hash object of the configuration passed to the Resumable.js instance.
+					 * @return {AngularResumable}      Returns the created {AngularResumable} instance, which wraps {Resumable}.
+					 */
+					'create': function(opts) {
+						return new AngularResumable(opts);
+					}
 				};
 			}];
 		}]);
