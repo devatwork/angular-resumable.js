@@ -8,7 +8,9 @@ files = [
   JASMINE_ADAPTER,
 
   // libraries
-  'lib/*',
+  'lib/angular.js',
+  'lib/angular-mocks.js',
+  'lib/resumable.js',
 
   // our app
   'src/*.js',
