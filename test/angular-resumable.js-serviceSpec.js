@@ -49,6 +49,24 @@ describe('service spec', function() {
 				expect(instance.opts.target).toBe('/test');
 			});
 		});
+
+		describe('and local override', function() {
+			describe('target: /', function() {
+				useWithGlobalOptions({target: '/'}, {target: '/local'});
+
+				it('the instance should have local target', function() {
+					expect(instance.opts.target).toBe('/local');
+				});
+			});
+
+			describe('target: /test', function() {
+				useWithGlobalOptions({target: '/test'}, {target: '/local'});
+
+				it('the instance should have equal target', function() {
+					expect(instance.opts.target).toBe('/local');
+				});
+			});
+		});
 	});
 
 	// helpers
