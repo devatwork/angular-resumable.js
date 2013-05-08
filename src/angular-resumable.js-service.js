@@ -43,65 +43,6 @@
 
 			// return the actual resumableJsFactory that is injected in controllers
 			this['$get'] = [function() {
-				/**
-				 * Constructor of the AngularResumable class.
-				 * @param  {Scope} $scope The scope on which {AngularResumable} will operate.
-				 * @param {Object} opts   A hash object of the configuration passed to the Resumable.js instance.
-				 */
-				function AngularResumable($scope, opts) {
-					// invoke super constructor
-					this.$scope = $scope;
-
-					// combine default options with global options and options
-					opts = angular.extend({}, defaults, globalOptions, opts);
-
-					// create the resumable
-					this.r = new Resumable(opts);
-					this.opts = this.r.opts;
-				}
-				/**
-				 * Assign a browse action to one or more DOM nodes. Pass in true to allow directories to be selected (Chrome only).
-				 */
-				AngularResumable.prototype.assignBrowse = function(domNodes, isDirectory) {
-					this.r.assignBrowse(domNodes, isDirectory);
-				};
-				/**
-				 * Listen for event from Resumable.js
-				 */
-				AngularResumable.prototype.on = function(event, callback) {
-					self = this;
-					self.r.on.call(this, event, function() {
-						var args = arguments;
-						safeApply(self.$scope, function() {
-							callback.apply(self, args);
-						});
-					});
-				};
-				/**
-				 * Start or resume uploading.
-				 */
-				AngularResumable.prototype.upload = function() {
-					this.r.upload();
-				};
-				/**
-				 * Pause uploading.
-				 */
-				AngularResumable.prototype.pause = function() {
-					this.r.pause();
-				};
-				/**
-				 * Cancel upload of all {ResumableFile} objects and remove them from the list.
-				 */
-				AngularResumable.prototype.cancel = function() {
-					this.r.cancel();
-				};
-				/**
-				 * Returns a float between 0 and 1 indicating the current upload progress of all files.
-				 */
-				AngularResumable.prototype.progress = function() {
-					return this.r.progress();
-				};
-
 				// return the public api of the resumableJsFactory.
 				return {
 					/**
@@ -111,7 +52,25 @@
 					 * @return {AngularResumable}        Returns the created {AngularResumable} instance, which wraps {Resumable}.
 					 */
 					'create': function($scope, opts) {
-						return new AngularResumable($scope, opts);
+						// combine default options with global options and options
+						opts = angular.extend({}, defaults, globalOptions, opts);
+
+						// create the resumable
+						var r = new Resumable(opts);
+
+						// monkey patch the on event method
+						var oldOn = r.on;
+						r.on = function(event, callback) {
+							oldOn.call(this, event, function() {
+								var args = arguments;
+								safeApply($scope, function() {
+									callback.apply(self, args);
+								});
+							});
+						};
+
+						// return the patched instance
+						return r;
 					}
 				};
 			}];
