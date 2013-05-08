@@ -2,6 +2,21 @@
 	'use strict';
 
 	/**
+	 * Safe apply
+	 * Source: https://coderwall.com/p/ngisma
+	 */
+	function safeApply(scope, fn) {
+		var phase = scope.$root.$$phase;
+		if(phase == '$apply' || phase == '$digest') {
+			if(fn && (typeof(fn) === 'function')) {
+				fn();
+			}
+		} else {
+			scope.$apply(fn);
+		}
+	}
+
+	/**
 	 * This module contains the resumable.js service.
 	 */
 	angular.module('resumable.js-services', [])
@@ -44,17 +59,41 @@
 					this.r = new Resumable(opts);
 					this.opts = this.r.opts;
 				}
+				/**
+				 * Assign a browse action to one or more DOM nodes. Pass in true to allow directories to be selected (Chrome only).
+				 */
+				AngularResumable.prototype.assignBrowse = function(domNodes, isDirectory) {
+					this.r.assignBrowse(domNodes, isDirectory);
+				};
+				/**
+				 * Listen for event from Resumable.js
+				 */
 				AngularResumable.prototype.on = function(event, callback) {
 					self = this;
 					self.r.on.call(this, event, function() {
 						var args = arguments;
-						self.$scope.$apply(function() {
+						safeApply(self.$scope, function() {
 							callback.apply(self, args);
 						});
 					});
 				};
-				AngularResumable.prototype.assignBrowse = function(domNodes, isDirectory) {
-					this.r.assignBrowse(domNodes, isDirectory);
+				/**
+				 * Start or resume uploading.
+				 */
+				AngularResumable.prototype.upload = function() {
+					this.r.upload();
+				};
+				/**
+				 * Pause uploading.
+				 */
+				AngularResumable.prototype.pause = function() {
+					this.r.pause();
+				};
+				/**
+				 * Cancel upload of all {ResumableFile} objects and remove them from the list.
+				 */
+				AngularResumable.prototype.cancel = function() {
+					this.r.cancel();
 				};
 
 				// return the public api of the resumableJsFactory.

@@ -15,6 +15,9 @@
 						'<li ng-repeat="file in files">{{file.fileName}} ({{file.size}} bytes)</li>',
 					'</ul>',
 					'<button ng-click="browse()" type="button" class="btn btn-browse">Browse</button>',
+					'<button ng-click="cancel()" ng-disabled="!uploading" type="button" class="btn btn-cancel">Cancel</button>',
+					'<button ng-click="pause()" ng-disabled="!uploading" type="button" class="btn btn-pause">Pause</button>',
+					'<button ng-click="upload()" ng-disabled="uploading || !files || files.length < \'1\'" type="button" class="btn btn-upload">Upload</button>',
 				'</div>'
 			].join(''));
 		}]);

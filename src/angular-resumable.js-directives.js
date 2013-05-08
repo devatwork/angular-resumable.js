@@ -25,14 +25,50 @@
 					var opts = angular.extend({}, scope.$eval(attrs.opts));
 					scope.r = resumableJsFactory.create(scope, opts);
 
-					// listen for new files
+					// add listeners
 					scope.r.on('fileAdded', function(file) {
 						scope.files.push(file);
 					});
+					scope.r.on('uploadStart', function() {
+						console.log('started');
+						scope.uploading = true;
+					});
+					scope.r.on('complete', function() {
+						console.log('completed');
+						scope.uploading = false;
+					});
+					scope.r.on('pause', function() {
+						console.log('paused');
+						scope.uploading = false;
+					});
+					scope.r.on('cancel', function() {
+						console.log('canceled');
+						scope.uploading = false;
+					});
 
-					// this method opens the browse dialog
+					/**
+					 * Open the file browser window.
+					 */
 					scope.browse = function() {
 						uploadButton.click();
+					};
+					/**
+					 * Start or resume uploading.
+					 */
+					scope.upload = function() {
+						scope.r.upload();
+					};
+					/**
+					 *  Pause uploading.
+					 */
+					scope.pause = function() {
+						scope.r.pause();
+					};
+					/**
+					 *  Cancel upload of all {ResumableFile} objects and remove them from the list.
+					 */
+					scope.cancel = function() {
+						scope.r.cancel();
 					};
 
 					// attach the browse elements
@@ -40,6 +76,7 @@
 
 					// init the scope
 					scope.files = [];
+					scope.uploading = false;
 				},
 				'restrict': 'E',
 				'replace': true,
