@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="resumableJsDemoApp">
+	<head>
+		<meta charset="utf-8">
+		<title>angular-resumable.js</title>
+	</head>
+	<body class="ng-cloak">
+		<resumable-upload-form></resumable-upload-form>
+
+		<script src="../lib/jquery.js"></script>
+		<script src="../lib/resumable.js"></script>
+		<script src="../lib/angular.js"></script>
+		<script src="../src/angular-resumable.js-directives.js"></script>
+		<script src="../src/angular-resumable.js-service.js"></script>
+		<script src="../src/angular-resumable.js-templates.js"></script>
+		<script>
+			angular.module('resumableJsDemoApp', ['resumable.js-directives', 'resumable.js-templates']);
+		</script>
+	</body>
+</html>

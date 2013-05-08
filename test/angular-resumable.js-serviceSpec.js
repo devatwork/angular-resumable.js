@@ -1,7 +1,8 @@
 describe('service spec', function() {
 	var provider,
 		factory,
-		instance;
+		instance,
+		scope;
 
 	// prepare/cleanup context
 	beforeEach(module('resumable.js-services'));
@@ -9,8 +10,9 @@ describe('service spec', function() {
 		module(function(resumableJsFactoryProvider) {
 			provider = resumableJsFactoryProvider;
 		});
-		inject(function(resumableJsFactory) {
+		inject(function(_$rootScope_, resumableJsFactory) {
 			factory = resumableJsFactory;
+			scope = _$rootScope_;
 		});
 	});
 	afterEach(function(){
@@ -77,7 +79,7 @@ describe('service spec', function() {
 		provider.options({});
 	};
 	var createInstance = function(opts) {
-		instance = factory.create(opts);
+		instance = factory.create(scope, opts);
 		expect(instance).toBeDefined();
 	};
 });

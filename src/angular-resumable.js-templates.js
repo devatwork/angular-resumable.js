@@ -11,7 +11,10 @@
 		.run(['$templateCache', function($templateCache) {
 			$templateCache.put('template/resumable.js/upload-form.html', [
 				'<div class="resumable-upload-form">',
-					'TODO',
+					'<ul class="unstyled">',
+						'<li ng-repeat="file in files">{{file.fileName}} ({{file.size}} bytes)</li>',
+					'</ul>',
+					'<button ng-click="browse()" type="button" class="btn btn-browse">Browse</button>',
 				'</div>'
 			].join(''));
 		}]);

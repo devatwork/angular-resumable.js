@@ -27,39 +27,46 @@
 			};
 
 			// return the actual resumableJsFactory that is injected in controllers
-			this['$get'] = ['$rootScope', function($rootScope) {
+			this['$get'] = [function() {
 				/**
 				 * Constructor of the AngularResumable class.
-				 * @param {Object} opts A hash object of the configuration passed to the Resumable.js instance.
+				 * @param  {Scope} $scope The scope on which {AngularResumable} will operate.
+				 * @param {Object} opts   A hash object of the configuration passed to the Resumable.js instance.
 				 */
-				function AngularResumable(opts) {
+				function AngularResumable($scope, opts) {
+					// invoke super constructor
+					this.$scope = $scope;
+
 					// combine default options with global options and options
 					opts = angular.extend({}, defaults, globalOptions, opts);
 
-					// invoke super constructor
-					Resumable.call(this, opts);
+					// create the resumable
+					this.r = new Resumable(opts);
+					this.opts = this.r.opts;
 				}
-				AngularResumable.prototype = new Resumable();
-				AngularResumable.prototype.constructor = AngularResumable;
 				AngularResumable.prototype.on = function(event, callback) {
 					self = this;
-					Resumable.prototype.on.call(this, event, function() {
+					self.r.on.call(this, event, function() {
 						var args = arguments;
-						$rootScope.$apply(function() {
+						self.$scope.$apply(function() {
 							callback.apply(self, args);
 						});
 					});
+				};
+				AngularResumable.prototype.assignBrowse = function(domNodes, isDirectory) {
+					this.r.assignBrowse(domNodes, isDirectory);
 				};
 
 				// return the public api of the resumableJsFactory.
 				return {
 					/**
 					 * Creates an instance of the {AngularResumable} class.
-					 * @param  {Object}           opts A hash object of the configuration passed to the Resumable.js instance.
-					 * @return {AngularResumable}      Returns the created {AngularResumable} instance, which wraps {Resumable}.
+					 * @param  {Scope}            $scope The scope on which {AngularResumable} will operate.
+					 * @param  {Object}           opts   A hash object of the configuration passed to the Resumable.js instance.
+					 * @return {AngularResumable}        Returns the created {AngularResumable} instance, which wraps {Resumable}.
 					 */
-					'create': function(opts) {
-						return new AngularResumable(opts);
+					'create': function($scope, opts) {
+						return new AngularResumable($scope, opts);
 					}
 				};
 			}];
