@@ -51,7 +51,7 @@
 					});
 				};
 
-				// returnt the public api of the resumableJsFactory.
+				// return the public api of the resumableJsFactory.
 				return {
 					/**
 					 * Creates an instance of the {AngularResumable} class.
