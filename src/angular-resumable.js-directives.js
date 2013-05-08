@@ -29,12 +29,13 @@
 					scope.r.on('fileAdded', function(file) {
 						scope.files.push(file);
 					});
+					scope.r.on('progress', function() {
+						// just listen in order to trigger the $apply
+					});
 					scope.r.on('uploadStart', function() {
-						console.log('started');
 						scope.uploading = true;
 					});
 					scope.r.on('complete', function() {
-						console.log('completed');
 						scope.uploading = false;
 					});
 					scope.r.on('pause', function() {

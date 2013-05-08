@@ -95,6 +95,12 @@
 				AngularResumable.prototype.cancel = function() {
 					this.r.cancel();
 				};
+				/**
+				 * Returns a float between 0 and 1 indicating the current upload progress of all files.
+				 */
+				AngularResumable.prototype.progress = function() {
+					return this.r.progress();
+				};
 
 				// return the public api of the resumableJsFactory.
 				return {
