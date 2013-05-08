@@ -70,6 +70,15 @@
 					 */
 					scope.cancel = function() {
 						scope.r.cancel();
+						scope.files = [];
+					};
+					/**
+					 * Cancels the upload of the given file.
+					 * @param {ResumableFile} file The file for which to cancel the upload.
+					 */
+					scope.cancelFile = function(file) {
+						file.abort();
+						scope.files.splice(scope.files.indexOf(file), 1);
 					};
 
 					// attach the browse elements
