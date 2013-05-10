@@ -18,7 +18,7 @@
 			return {
 				'link': function(scope, element, attrs) {
 					// create a file upload button
-					var uploadButton = angular.element('<input type="file" style="display:none;">');
+					var uploadButton = angular.element('<input type="file" style="display:none;">')[0];
 					element.append(uploadButton);
 
 					// create the resumable object
