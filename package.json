@@ -13,6 +13,7 @@
 	"license": "MIT",
 	"readmeFilename": "README.md",
 	"devDependencies": {
-		"karma": "~0.8"
+		"karma": "~0.8",
+		"jquery": "*"
 	}
 }
