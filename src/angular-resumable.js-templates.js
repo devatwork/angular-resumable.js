@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
 	'use strict';
 
 	/**
@@ -33,4 +33,4 @@
 				'</div>'
 			].join(''));
 		}]);
-}());
+}(angular));

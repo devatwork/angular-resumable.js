@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
 	'use strict';
 
 	/**
@@ -95,4 +95,4 @@
 				'templateUrl': 'template/resumable.js/upload-form.html'
 			};
 		}]);
-}());
+}(angular));

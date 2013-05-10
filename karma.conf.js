@@ -14,7 +14,7 @@ files = [
   'lib/angular-mocks.js',
 
   // our app
-  'src/*.js',
+  'dist/*.min.js',
 
   // tests
   'test/*.js'
