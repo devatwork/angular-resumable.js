@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 		meta: {
 			modules: 'angular.module("angular.resumable", ["resumable.js-services", "resumable.js-directives"]);',
 			tplmodules: 'angular.module("angular.resumable.tpls", ["resumable.js-templates"]);',
-			all: 'angular.module("angular.resumable", ["angular.resumable.tpls", "resumable.js-services", "resumable.js-directives"]);'
+			all: 'angular.module("angular.resumable", ["resumable.js-templates", "resumable.js-services", "resumable.js-directives"]);'
 		},
 		jshint: {
 			files: ['Gruntfile.js','src/**/*.js'],
