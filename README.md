@@ -79,6 +79,18 @@ A simple directive which shows a Resumable powered upload form. It takes one att
 
 TODO
 
+## Devopment
+
+### Prepare your environment
+* Install [Node.js](http://nodejs.org/) and NPM (should come with)
+* Install global dev dependencies: `npm install -g grunt-cli karma`
+* Instal local dev dependencies: `npm install` while current directory is angular-resumable.js repo
+
+### Build
+* Build the whole project: `grunt` - this will run `lint`, `test`, and `concat` targets
+
+Check the Grunt build file for other tasks that are defined for this project
+
 ## Copyright
 
 Copyright © 2013 Bert Willems and contributors
