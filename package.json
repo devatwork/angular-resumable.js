@@ -1,6 +1,6 @@
 {
   "name": "angular-resumable",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An effort to integrate the excellent resumable.js library with Angular.",
   "scripts": {
     "test": "karma start --single-run --no-auto-watch"
