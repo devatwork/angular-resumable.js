@@ -27,7 +27,7 @@
 		 * @description
 		 * Wraps the resumable.js API and adds scope management.
 		 */
-		.provider('resumableJsFactory', [function() {
+		.provider('resumableJsFactory', function() {
 			// define the default properties send to resumable.js
 			var defaults = {},
 				globalOptions = {};
@@ -42,7 +42,7 @@
 			};
 
 			// return the actual resumableJsFactory that is injected in controllers
-			this['$get'] = [function() {
+			this['$get'] = function() {
 				// return the public api of the resumableJsFactory.
 				return {
 					/**
@@ -73,6 +73,6 @@
 						return r;
 					}
 				};
-			}];
-		}]);
+			};
+		});
 }(angular));
