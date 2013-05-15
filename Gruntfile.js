@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-release');
 
 	// Project configuration.
 	grunt.initConfig({
@@ -74,6 +75,9 @@ module.exports = function(grunt) {
 				src:['<%= dist %>/<%= pkg.name %>-tpls-<%= pkg.version %>.js'],
 				dest:'<%= dist %>/<%= pkg.name %>-tpls-<%= pkg.version %>.min.js'
 			}
+		},
+		release: {
+			npm: false
 		}
 	});
 
